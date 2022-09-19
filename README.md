@@ -3,8 +3,8 @@
 - [Recursos Kubernetes](#recursos-kubernetes)
 - [Instalación kubctl y primeros pasos](#instalación-kubctl-y-primeros-pasos)
 - [Manifiestos de Pelado Nerd](#manifiestos-de-pelado-nerd)
-- [Cheatsheet kubernetes](#cheatsheet-kubernetes)
 - [Ejemplo de un YAML para un pod básico de busybox](#ejemplo-de-un-yaml-para-un-pod-básico-de-busybox)
+- [Cheatsheet kubernetes](#cheatsheet-kubernetes)
 - [Agradecimientos](#agradecimientos)
 
 
@@ -13,6 +13,7 @@
 Kubernetes es un sistema de código libre para la automatización del despliegue, ajuste de escala y manejo de aplicaciones en contenedores que fue originalmente diseñado por Google y donado a la Cloud Native Computing Foundation (parte de la Linux Foundation). Soporta diferentes entornos para la ejecución de contenedores, incluido Docker y su misión es la orquestación de dichos contenedores.
 
 Es declarativo.
+
 ![](img/kubernetes-declarativo.png)
 
 ## Componentes
@@ -83,16 +84,18 @@ kubectl version --client=true --output=yaml
 ```
 Ponemos `--cliente=true` porque si no se intentaría conectar a un clúster kubernetes y trataría de descargar la versión kubernetes del clúster. Para un formato más legible controlamos la salida con `--output=yaml|json]`
 
-En *Windows*, con Docker Desktop podemos activar kubernetes.
+### kind
 
 En **Linux**, podemos instalar kind https://kind.sigs.k8s.io/
 
 ![](img/kind.png)
 
+### minikube
 También podemos instalar minikube https://minikube.sigs.k8s.io/docs/ que instala todos los componentes de kubernetes en una MV y además tiene una serie de plugins para darle funcionalidades con una serie de paquetes precinfigurados.
 
 ![](img/minikube.png)
 
+### Digital Ocean
 En esta guía utilizaré [DigitalOcean](https://m.do.co/c/98c9ca613f37), con 3 nodos kubernetes de los baratitos.
 
 ![](img/DigitalOcean.png)
@@ -105,7 +108,7 @@ Para conectar kubectl con el cluster de kubernetes se debe desarcargar el ficher
 
 Se exporta en una variable de entorno
 ```
-export KUBECONFIG=~/Downloads/k8s-1-20..............
+kubectl --kubeconfig=/<pathtodirectory>/k8s-1-24-4-do-0...........yaml get nodes
 ```
 Y podremos comprobar los nodos con
 ```
@@ -114,6 +117,7 @@ kubectl get nodes
 
 ![](img/get-nodes.png)
 
+### Resultados de kubectl con cololes: kubcolors
 Para verlo con colores se puede instalar el plugin de kubectl que se llama *[kubecolors](https://github.com/hidetatz/kubecolor)*
 
 *En ubuntu:*
@@ -131,21 +135,46 @@ sudo apt update && sudo apt install kubecolor -y
 kubecolor --context=[tu_contexto] get pods -o json
 ```
 ```
-kubecolor --context=do-ams3-k8s-1-24-4-do-0-ams3-1663572528096 get pods -o json
+kubecolor --context=do-ams3-k8s-1-24-4-do-0-ams3-..... get pods -o json
 ```
 ```
 alias kubectl="kubecolor"
 ```
 ![](img/get-nodes-color.png)
 
+### Resumen conexión de cluster Digital Ocean
+Para que tenga el color y todo
+```
+export KUBECONFIG=~/Downloads/k8s-1-20.... get nodes
+```
+Comprobamos
+```
+kubectl get nodes
+```
+Vemos el contexto
+```
+kubectl config get-contexts
+```
+Añadimos el contexto en el plugin del color
+```
+kubecolor --context=do-ams3-k8s-1-24-4-do-...... get pods -o json
+```
+Nos aseguramos del alias y volvemos a comprobar
+```
+alias kubectl="kubecolor"
+```
+```
+kubectl get nodes
+```
 
+### Ayuda de kubeclt
 Se puede ver la ayuda del cliente con 
 ```
 kubectl --help
 ```
 ![](img/ayuda.png)
 
-*Trascripción traducida:*
+> *Trascripción traducida de la ayuda de kubectl*
 ```
 kubectl controla el gestor de clústeres de Kubernetes.
 
@@ -259,7 +288,7 @@ El pod es nuevo, tiene otro hash. Así que esto asegura que siempre estén el mi
 ---
 ## Manifiestos de Pelado Nerd
 ### Manifiesto de POD
-Ahora utilizaremos un manifiesto de un pod del [pelado Nerd](https://github.com/pablokbs/peladonerd/tree/master/kubernetes/35) llamado `01-pod.ymal`
+Ahora utilizaremos un manifiesto de un pod del [pelado Nerd](https://github.com/pablokbs/peladonerd/tree/master/kubernetes/35) llamado [01-pod.ymal](yaml-del-pelado/01-pod.yaml)
 
 ```
 apiVersion: v1
@@ -304,7 +333,7 @@ Como no se creo la orden para mantener siempre un pod, el pod desapareció.
 
 ##Manifiestos del Pelado Nerd
 
-Otro manifiesto de un pod del [pelado Nerd](https://github.com/pablokbs/peladonerd/tree/master/kubernetes/35) llamado `02-pod.ymal` es lo mismo pero con más opciones.
+Otro manifiesto de un pod del [pelado Nerd](https://github.com/pablokbs/peladonerd/tree/master/kubernetes/35) llamado [02-pod.ymal](yaml-del-pelado/02-pod.yaml) es lo mismo pero con más opciones.
 
 ```
 apiVersion: v1
@@ -366,7 +395,7 @@ Y además veremos el yaml si le añadimos la opción `-o yaml` con todas las var
  kubectl get pod nginx -o yaml
 ```
 ### Manifiesto de Deployment
-Pero para trabajar con kubernetes, no deberíamos levantar el recurso mínimo como son los pods, es mejor aprocechar la capacidad de orquestación de la herramienta y levantar deployment. Lo encontraremos en otro manifiesto de un deployment del [pelado Nerd](https://github.com/pablokbs/peladonerd/tree/master/kubernetes/35) llamado `04-deployment.yaml`.
+Pero para trabajar con kubernetes, no deberíamos levantar el recurso mínimo como son los pods, es mejor aprocechar la capacidad de orquestación de la herramienta y levantar deployment. Lo encontraremos en otro manifiesto de un deployment del [pelado Nerd](https://github.com/pablokbs/peladonerd/tree/master/kubernetes/35) llamado [04-deployment.yaml](yaml-del-pelado/04-deployment.yaml).
 ```
 apiVersion: apps/v1
 kind: Deployment
@@ -438,7 +467,7 @@ Para borrar el deployment utilizaremos el mismo yaml con el que lo corrimos.
 kubectl delete -f 04-deployment.yaml
 ```
 ### Manifiesto de daemonset
-`daemonset` es otra forma de deployment un pod pero en este caso será un pod en cada uno de los nodos existente. No indicas las réplicas por eso. Sirve, por ejemplo, para despliegues de servicios de monitoreo. De nuevo, vamos a un manifiesto de un daemonset del [pelado Nerd](https://github.com/pablokbs/peladonerd/tree/master/kubernetes/35) llamado `03-daemonset.yaml`.
+`daemonset` es otra forma de deployment un pod pero en este caso será un pod en cada uno de los nodos existente. No indicas las réplicas por eso. Sirve, por ejemplo, para despliegues de servicios de monitoreo. De nuevo, vamos a un manifiesto de un daemonset del [pelado Nerd](https://github.com/pablokbs/peladonerd/tree/master/kubernetes/35) llamado [03-daemonset.yaml](yaml-del-pelado/03-daemonset.yaml).
 ```
 apiVersion: apps/v1
 kind: DaemonSet
@@ -495,6 +524,477 @@ Borramos de nuevo con el fichero
 kubectl delete -f pelado_nerd_pruebas/kubernetes/35/03-daemonset.yaml
 ```
 
+### Manifiesto de statefulset
+`statefulset` podemos crear pods con volumenes que estarán atados. Es la manera de que los datos sean persistentes, como en Docker. Sirve, por ejemplo, para las BBDD. El manifiesto de statefulset del [pelado Nerd](https://github.com/pablokbs/peladonerd/tree/master/kubernetes/35) llamado [05-statefulset.yaml](yaml-del-pelado/05-statefulset.yaml).
+
+```
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: my-csi-app-set
+spec:
+  selector:
+    matchLabels:
+      app: mypod
+  serviceName: "my-frontend"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mypod
+    spec:
+      containers:
+      - name: my-frontend
+        image: busybox
+        args:
+        - sleep
+        - infinity
+        volumeMounts:
+        - mountPath: "/data"
+          name: csi-pvc
+  volumeClaimTemplates:
+  - metadata:
+      name: csi-pvc
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 5Gi
+      storageClassName: do-block-storage
+```
+Dentro de `volumeClaimTemplates` se le dan las especificaciones al volumen y, en concreto, `storageClassName: do-block-storage` es un driver que permite construir un volumen digital en DigitalOcean. Cuando se aplique este manifiesto se creará automáticamente el volumen de 5 Gb y se conectará al clúster de kubernetes.
+```
+kubectl apply -f kubernetes/35/05-statefulset.yaml 
+```
+Ahora vamos a ver los detalles de un pod
+```
+kubectl describe pod my-csi-app-set-0
+```
+
+![](img/describe-pod.png)
+
+En la parte superior salen todas las descripciones habituales. Más abajo aparecen los eventos del pod.
+
+![](img/eventos-pod.png)
+
+En los eventos se puede ver como intentó crear un pvc (PersistentVolumeClaims). Es un pedido desde kubernetes al proveedor. Se pueden ver con el siguiente comando.
+```
+kubectl get pvc
+```
+![](img/get-pvc.png)
+
+Podemos pedir el `describe` del pvc
+```
+kubectl describe pvc csi-pvc-my-csi-app-set-0
+```
+Vewremos sus descripción y los eventos.
+![](img/describe-pvc.png)
+
+Si vamos al dashboard de DigitalOCean podremos ver en volumenes el recien creado.
+![](img/volumen-digitalocean.png)
+
+
+Ahora si miramos los statefilsets y borramos por su nombre, el volumen quedará.
+```
+ kubectl get statefulsets
+```
+```
+kubectl delete sts [nombre-del-statefulsets]
+```
+
+![](img/delete-sts.png)
+
+Tendremos que borrar expresamente el volumen si nos queremos deshacer de él.
+
+```
+kubectl delete pvc csi-pvc-my-csi-app-set-0
+```
+
+### Manifiesto cluster ip
+
+Antes de aplicar el manifiesto, unas explicaciones aclaratorias.
+#### Pod Networking
+
+![](img/pod-networking.png)
+
+**calico** es un agente que corre en cada nodo que crea rutas IPs para enrutar entre cada uno de los nodos.
+
+**etcd** es la BBDD de kubernetes donde se guardan los estados.
+
+#### Kube-proxy
+
+![](img/kube-proxy.png)
+
+Los servicios en Kubernetes son una forma de poder contactar entre aaplicaciones, ya sea desde dentro del clúster entre pods o desde fuera. Hay 3 tipos:
+- **Clúster IP** - Una especie de load balancer entre pods 
+- **Node Port** - crea un puerto en cada nodo que crea el servicio entre los pods que se configuren. Lo encontrarán `kube-proxy`.
+- **Load Balancer** - Crea un balancedor de carga en el proveedor de cloud para redireccionar el tráfico a los pods.
+
+Ahora vamos a aplicar el fichero yaml [06-randompod.yaml](yaml-del-pelado/06-randompod.yaml) que lo que hará es levantar un ubuntu sleep. Podremos entrar a este pod para acceder al resto. 
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ubuntu
+spec:
+  containers:
+  - name: ubuntu
+    image: ubuntu
+    args:
+    - sleep
+    - infinity
+```
+
+```
+kubectl apply -f kubernetes/35/06-randompod.yaml
+```
+
+El resto será el fichero yaml [07-hello-deployment-svc-clusterIP.yaml](yaml-del-pelado/07-hello-deployment-svc-clusterIP.yaml)
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      role: hello
+  template:
+    metadata:
+      labels:
+        role: hello
+    spec:
+      containers:
+      - name: hello
+        image: gcr.io/google-samples/hello-app:1.0
+        ports:
+        - containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    role: hello
+```
+Para verlo todo solicitaremos que lo muestre con el siguiente comando
+```
+kubectl get all
+```
+![](img/get-all.png)
+
+Podemos ver las IPs de los clústers pero no las de los pods. Pero podemos pedir un describe del servicio para más detalles.
+```
+kubectl describe svc hello
+```
+![](img/describe-svc.png)
+
+Los `Endpoints` son las IPs de cada uno de los pods.
+
+Tamnbién se pueden ver con un get pods detallado.
+```
+kubectl get pods -o wide
+```
+![](img/get-pod-wide-ip.png)
+
+Si matamos un pod, automáticamente se volverá a crear y será balanceado por el servicio.
+
+![](img/balanceo-ip.png)
+
+Para poder hacer ping tengo que instalar un ubuntu con iputils: https://hub.docker.com/r/mmoy/ubuntu-netutils/
+
+Lo cambio en el manifiesto quedando así
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ubuntu
+spec:
+  containers:
+  - name: ubuntu
+    image: mmoy/ubuntu-netutils
+    args:
+    - sleep
+    - infinity
+
+```
+
+Ahora ya puedo hacer las comprobaciones desde el pod ubuntu con ping y curl para ver como balancea la carga.
+
+![](img/ping-curl-hello.png)
+
+### Manifiesto nodeport
+
+Borramos el anterior `hello` y vamos a aplicar el manifiesto [08-hello-deployment-svc-nodePort.yaml](yaml-del-pelado/08-hello-deployment-svc-nodePort.yaml) del Pelado.
+
+![](img/delete-apply-nodeport.png)
+
+El manifiesto es el siguiente
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      role: hello
+  template:
+    metadata:
+      labels:
+        role: hello
+    spec:
+      containers:
+      - name: hello
+        image: gcr.io/google-samples/hello-app:1.0
+        ports:
+        - containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+    targetPort: 8080
+    nodePort: 30000
+  selector:
+    role: hello
+
+```
+
+En el anterior manifiesto no se especifico el tipo porque por defecto es de cluster ip. En cambio, en este se puede ver `type: NodePort`. Le podemos especificar el puerto de cada nodo para llegar al servicio: `nodePort: 30000`.
+
+
+Si mostramos los nodos detalladamente podremos ver las IPs de los nodos, si hacemos curl a la IP con el puerto especificado podremos ver el balanceo de carga.
+
+![](img/balaceador-nodeport.png)
+
+Hace lo mismo que el cluster ip pero desde fuera, exponiendo el puerto al mundo.
+
+### Manifiesto load balancer
+
+En esta ocasión utilizaremos el documento [09-hello-deployment-svc-loadBalancer.yaml](yaml-del-pelado/09-hello-deployment-svc-loadBalancer.yaml) del querido Pelado.
+
+Es el siguiente
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      role: hello
+  template:
+    metadata:
+      labels:
+        role: hello
+    spec:
+      containers:
+      - name: hello
+        image: gcr.io/google-samples/hello-app:1.0
+        ports:
+        - containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    role: hello
+```
+En este enseguida hemos visto que el tipo de servicio es `LoadBalancer`. 
+
+Nos aseguramos que borramos el anterior nodeport y aplicamos este
+
+En esta ocasión, el servicio está `<pending>` ya que lo tiene que desplegar DigitalOcean y suele tardar un ratito.
+
+![](img/loadbalancer.png)
+
+Es mejor hacer este tipo que nodeport, ya que nodeport está atado en cada nodo. En cambio, con loadbalancer siempre es la misma IP.
+
+Si vamos al dashboard de DigitalOcean podremos ver el balanceador.
+
+![](img/balanceador-digitalocean.png)
+
+Una vez desplegado ya tendremos nuestra ip y podremos comprobarla como balancea con curl.
+
+![](img/balanceador-curl.png)
+
+
+### Manifiesto versiones e ingress
+
+Utilizaremos el fichero yaml [10-hello-v1-v2-deployment-svc.yaml](yaml-del-pelado/10-hello-v1-v2-deployment-svc.yaml) del Pelado.
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-v1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      role: hello-v1
+  template:
+    metadata:
+      labels:
+        role: hello-v1
+    spec:
+      containers:
+      - name: hello-v1
+        image: gcr.io/google-samples/hello-app:1.0
+        ports:
+        - containerPort: 8080
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-v2
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      role: hello-v2
+  template:
+    metadata:
+      labels:
+        role: hello-v2
+    spec:
+      containers:
+      - name: hello-v2
+        image: gcr.io/google-samples/hello-app:2.0
+        ports:
+        - containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-v1
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    role: hello-v1
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-v2
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    role: hello-v2
+
+```
+
+Tendremos 2 versiones de la aplicación y un servicio por cada uno. Se puede ver cuando aplicamos.
+
+![](img/v1-v2.png)
+
+Con un `get all` podemos ver que tenemos 6 pods, 3 por cada versión, y un servicio por versión.
+
+![](img/get-all-v1-v2.png)
+
+`Ingress` es un tipo de recurso que nos permite crear accesos a nuestro servicio basados en el path. Kubernetes hace un deploy de un controlador nginx que va a leer las configuraciones de Ingress y se va a autoconfigurar para enviar el tráfico a donde tenga que hacerlo.
+
+No todos los proveedores de cloud tienen instalado nginx, con lo que en algunos hay que instalarlo. Una opción para instalarlo es utilizar la herramienta [helm](https://helm.sh/) 
+
+En DigitalOcean, en la pestaña de marketplace del dashboard del clúster podremos ver aplicaciones a instalar, entre la que está nginx.
+
+![](img/nginx-digitalocean.png)
+
+Para instalarlo simplemente tenemos que darle al botón. 
+
+![](https://media.tenor.com/images/5bcb5056e6dfe7f757018ecaa8a4b868/tenor.gif)
+
+Tardará un rato...
+
+El controlador de nginx ingress creará un namespace, podremos verlo con `get ns` y si mostramos los pods filtrando por este namespaces veremos los que corren bajo nginx.
+
+![](img/namespace-ingress-nginx.png)
+
+Ingress tiene muchas posibilidades, es importante darle un vistazo a su documentación: https://kubernetes.io/docs/concepts/services-networking/ingress/
+
+
+Ahora aplicamos el fichero yaml [11-hello-ingress.yaml](yaml-del-pelado/11-hello-ingress.yaml) de Mr. Pelado.
+
+```
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hello-app
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /v1
+        pathType: Prefix
+        backend:
+          service:
+            name: hello-v1
+            port:
+              number: 8080
+      - path: /v2
+        pathType: Prefix
+        backend:
+          service:
+            name: hello-v2
+            port:
+              number: 8080
+```
+Podemos mostrar los recursos ingress con el siguiente comando
+```
+kubectl get ing
+```
+Para hacernos una idea podemos ver este diagrama de ejemplo de la documentación de Digital Ocean, buenísimos documentando.
+
+![](https://raw.githubusercontent.com/digitalocean/marketplace-kubernetes/master/stacks/ingress-nginx/assets/images/arch_nginx.png)
+
+Se puede ver que también se crea un load balancer que es el que recibirá todo el tráfico externo. 
+
+Crear este balanceador con ingress es lo más común y lo más ágil. Hay otras alternativas como [Traefik](https://traefik.io/)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 > Continuará....
 
 
@@ -505,6 +1005,56 @@ kubectl delete -f pelado_nerd_pruebas/kubernetes/35/03-daemonset.yaml
 
 
 
+
+---
+## Ejemplo de un YAML para un pod básico de busybox
+```
+apiVersion: v1kind: Podmetadata:name: busyboxspec:containers:- image: busybox:1.28.4command:- sleep- "3600"name: busyboxrestartPolicy: Always
+```
+Crear un *pod*
+```
+kubectl create -f busybox.yaml
+```
+Crear un *deployment*
+```
+kubectl run nginx --image=nginx
+```
+Crear un *service* a partir del *deployment* anterior
+```
+kubectl expose deployment nginx --port=80 --type=NodePort
+```
+Aquí está el *YAML* para un *volumen persistente* simple usando el almacenamiento local del nodo:
+```
+apiVersion: v1kind: PersistentVolumemetadata:name: data-pvnamespace: webspec:storageClassName: local-storagecapacity:storage: 1GiaccessModes:- ReadWriteOncehostPath:path: /mnt/data
+```
+Crear un *volumen persistente*
+```
+kubectl apply -f my-pv.yaml
+```
+Aquí está el *YAML* para un *ConfigMap* simple
+```
+apiVersion: v1kind: ConfigMapmetadata:name: my-config-mapdata:myKey: myValueanotherKey: anotherValue
+```
+Crear el *ConfigMap*
+```
+kubectl apply -f configmap.yaml
+```
+Aquí está el *YAML* para los *secret*:
+```
+apiVersion: v1kind: Secretmetadata:name: my-secretstringData:myKey: myPassword
+```
+Crear el *secret*
+```
+kubectl apply -f secret.yaml
+```
+Aquí está el *YAML* para una *cuenta de servicio*
+```
+apiVersion: v1kind: ServiceAccountmetadata:name: acrnamespace: defaultsecrets:- name: acr
+```
+Crear el *service account*
+```
+kubectl apply -f serviceaccount.yaml
+```
 
 
 ---
@@ -886,61 +1436,9 @@ kubectl cluster -info
 ```
 kubectl get componentstatuses
 ```
-
+### Resumen en una imagen
 ![](img/kubernetes-cheat-sheet.png)
-
-
-
-
----
-## Ejemplo de un YAML para un pod básico de busybox
-```
-apiVersion: v1kind: Podmetadata:name: busyboxspec:containers:- image: busybox:1.28.4command:- sleep- "3600"name: busyboxrestartPolicy: Always
-```
-Crear un *pod*
-```
-kubectl create -f busybox.yaml
-```
-Crear un *deployment*
-```
-kubectl run nginx --image=nginx
-```
-Crear un *service* a partir del *deployment* anterior
-```
-kubectl expose deployment nginx --port=80 --type=NodePort
-```
-Aquí está el *YAML* para un *volumen persistente* simple usando el almacenamiento local del nodo:
-```
-apiVersion: v1kind: PersistentVolumemetadata:name: data-pvnamespace: webspec:storageClassName: local-storagecapacity:storage: 1GiaccessModes:- ReadWriteOncehostPath:path: /mnt/data
-```
-Crear un *volumen persistente*
-```
-kubectl apply -f my-pv.yaml
-```
-Aquí está el *YAML* para un *ConfigMap* simple
-```
-apiVersion: v1kind: ConfigMapmetadata:name: my-config-mapdata:myKey: myValueanotherKey: anotherValue
-```
-Crear el *ConfigMap*
-```
-kubectl apply -f configmap.yaml
-```
-Aquí está el *YAML* para los *secret*:
-```
-apiVersion: v1kind: Secretmetadata:name: my-secretstringData:myKey: myPassword
-```
-Crear el *secret*
-```
-kubectl apply -f secret.yaml
-```
-Aquí está el *YAML* para una *cuenta de servicio*
-```
-apiVersion: v1kind: ServiceAccountmetadata:name: acrnamespace: defaultsecrets:- name: acr
-```
-Crear el *service account*
-```
-kubectl apply -f serviceaccount.yaml
-```
+[Descarga PNG](img/kubernetes-cheat-sheet.png)
 
 ## Agradecimientos
 
