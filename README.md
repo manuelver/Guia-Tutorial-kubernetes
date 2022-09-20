@@ -1,16 +1,17 @@
-# Índice
-- [Índice](#índice)
-- [Guía Kubernetes](#guía-kubernetes)
-  - [Componentes](#componentes)
-  - [Recursos Kubernetes](#recursos-kubernetes)
-  - [Instalación kubctl y primeros pasos](#instalación-kubctl-y-primeros-pasos)
+# Índice 📎
+- [Índice 📎](#índice-)
+- [Guía Kubernetes 👓](#guía-kubernetes-)
+  - [Componentes 🧩](#componentes-)
+  - [Recursos Kubernetes 🛞](#recursos-kubernetes-)
+  - [Instalación kubctl y primeros pasos 🚀](#instalación-kubctl-y-primeros-pasos-)
     - [kind](#kind)
     - [minikube](#minikube)
     - [Digital Ocean](#digital-ocean)
     - [Resultados de kubectl con cololes: kubecolors](#resultados-de-kubectl-con-cololes-kubecolors)
     - [Resumen conexión de cluster Digital Ocean](#resumen-conexión-de-cluster-digital-ocean)
     - [Ayuda de kubeclt](#ayuda-de-kubeclt)
-  - [Manifiestos de Pelado Nerd](#manifiestos-de-pelado-nerd)
+  - [Ejemplo de un YAML para un pod básico de busybox 📃](#ejemplo-de-un-yaml-para-un-pod-básico-de-busybox-)
+  - [Manifiestos de Pelado Nerd 📜](#manifiestos-de-pelado-nerd-)
     - [Manifiesto de POD](#manifiesto-de-pod)
     - [Otro Manifiesto de POD](#otro-manifiesto-de-pod)
     - [Manifiesto de Deployment](#manifiesto-de-deployment)
@@ -26,8 +27,7 @@
     - [Manifiesto secret](#manifiesto-secret)
     - [Manifiesto kustomization](#manifiesto-kustomization)
     - [stern](#stern)
-  - [Ejemplo de un YAML para un pod básico de busybox](#ejemplo-de-un-yaml-para-un-pod-básico-de-busybox)
-  - [Cheatsheet kubernetes](#cheatsheet-kubernetes)
+  - [Cheatsheet kubernetes 🔖](#cheatsheet-kubernetes-)
     - [Visualizar información de los recursos](#visualizar-información-de-los-recursos)
       - [Nodes](#nodes)
       - [ods](#ods)
@@ -69,10 +69,10 @@
       - [Llamar a la API](#llamar-a-la-api)
       - [Información del Cluster](#información-del-cluster)
     - [Resumen en una imagen](#resumen-en-una-imagen)
-  - [Agradecimientos](#agradecimientos)
+  - [Agradecimientos 🎁](#agradecimientos-)
 
 
-# Guía Kubernetes
+# Guía Kubernetes 👓
 
 Kubernetes es un sistema de código libre para la automatización del despliegue, ajuste de escala y manejo de aplicaciones en contenedores que fue originalmente diseñado por Google y donado a la Cloud Native Computing Foundation (parte de la Linux Foundation). Soporta diferentes entornos para la ejecución de contenedores, incluido Docker y su misión es la orquestación de dichos contenedores.
 
@@ -80,7 +80,7 @@ Es declarativo.
 
 ![](img/kubernetes-declarativo.png)
 
-## Componentes
+## Componentes 🧩
 ![](img/Componentes_kubernetes.png)
 
 - **etcd** - Guarda el estado de Kubernetes
@@ -97,7 +97,7 @@ No es buena idea correr tráfico de clusterización en equipos personales.
 
 
 ---
-## Recursos Kubernetes
+## Recursos Kubernetes 🛞
 
 ![](img/Recursos-kubernetes.png)
 
@@ -118,7 +118,7 @@ Los **namespace** son clusters virtuales respaldados por el mismo clúster físi
 
 
 ---
-## Instalación kubctl y primeros pasos
+## Instalación kubctl y primeros pasos 🚀
 
 Lo primero es instalar kubectl.
 
@@ -349,8 +349,60 @@ Inmediatamente muestro los pods y se puede ver como lo está creando de nuevo.
 
 El pod es nuevo, tiene otro hash. Así que esto asegura que siempre estén el mismo número de pods.
 
+
 ---
-## Manifiestos de Pelado Nerd
+## Ejemplo de un YAML para un pod básico de busybox 📃
+```
+apiVersion: v1kind: Podmetadata:name: busyboxspec:containers:- image: busybox:1.28.4command:- sleep- "3600"name: busyboxrestartPolicy: Always
+```
+Crear un *pod*
+```
+kubectl create -f busybox.yaml
+```
+Crear un *deployment*
+```
+kubectl run nginx --image=nginx
+```
+Crear un *service* a partir del *deployment* anterior
+```
+kubectl expose deployment nginx --port=80 --type=NodePort
+```
+Aquí está el *YAML* para un *volumen persistente* simple usando el almacenamiento local del nodo:
+```
+apiVersion: v1kind: PersistentVolumemetadata:name: data-pvnamespace: webspec:storageClassName: local-storagecapacity:storage: 1GiaccessModes:- ReadWriteOncehostPath:path: /mnt/data
+```
+Crear un *volumen persistente*
+```
+kubectl apply -f my-pv.yaml
+```
+Aquí está el *YAML* para un *ConfigMap* simple
+```
+apiVersion: v1kind: ConfigMapmetadata:name: my-config-mapdata:myKey: myValueanotherKey: anotherValue
+```
+Crear el *ConfigMap*
+```
+kubectl apply -f configmap.yaml
+```
+Aquí está el *YAML* para los *secret*:
+```
+apiVersion: v1kind: Secretmetadata:name: my-secretstringData:myKey: myPassword
+```
+Crear el *secret*
+```
+kubectl apply -f secret.yaml
+```
+Aquí está el *YAML* para una *cuenta de servicio*
+```
+apiVersion: v1kind: ServiceAccountmetadata:name: acrnamespace: defaultsecrets:- name: acr
+```
+Crear el *service account*
+```
+kubectl apply -f serviceaccount.yaml
+```
+
+
+---
+## Manifiestos de Pelado Nerd 📜
 ### Manifiesto de POD
 Ahora utilizaremos un manifiesto de un pod del [pelado Nerd](https://github.com/pablokbs/peladonerd/tree/master/kubernetes/35) llamado [01-pod.ymal](yaml-del-pelado/01-pod.yaml)
 
@@ -1275,60 +1327,8 @@ Si cambiamos algo del fichero yaml y volvemos a correr el comando kustomize, vol
 
 ![](img/Captura-del-Pelado-stern.png)
 
-
 ---
-## Ejemplo de un YAML para un pod básico de busybox
-```
-apiVersion: v1kind: Podmetadata:name: busyboxspec:containers:- image: busybox:1.28.4command:- sleep- "3600"name: busyboxrestartPolicy: Always
-```
-Crear un *pod*
-```
-kubectl create -f busybox.yaml
-```
-Crear un *deployment*
-```
-kubectl run nginx --image=nginx
-```
-Crear un *service* a partir del *deployment* anterior
-```
-kubectl expose deployment nginx --port=80 --type=NodePort
-```
-Aquí está el *YAML* para un *volumen persistente* simple usando el almacenamiento local del nodo:
-```
-apiVersion: v1kind: PersistentVolumemetadata:name: data-pvnamespace: webspec:storageClassName: local-storagecapacity:storage: 1GiaccessModes:- ReadWriteOncehostPath:path: /mnt/data
-```
-Crear un *volumen persistente*
-```
-kubectl apply -f my-pv.yaml
-```
-Aquí está el *YAML* para un *ConfigMap* simple
-```
-apiVersion: v1kind: ConfigMapmetadata:name: my-config-mapdata:myKey: myValueanotherKey: anotherValue
-```
-Crear el *ConfigMap*
-```
-kubectl apply -f configmap.yaml
-```
-Aquí está el *YAML* para los *secret*:
-```
-apiVersion: v1kind: Secretmetadata:name: my-secretstringData:myKey: myPassword
-```
-Crear el *secret*
-```
-kubectl apply -f secret.yaml
-```
-Aquí está el *YAML* para una *cuenta de servicio*
-```
-apiVersion: v1kind: ServiceAccountmetadata:name: acrnamespace: defaultsecrets:- name: acr
-```
-Crear el *service account*
-```
-kubectl apply -f serviceaccount.yaml
-```
-
-
----
-## Cheatsheet kubernetes
+## Cheatsheet kubernetes 🔖
 
 ### Visualizar información de los recursos
 #### Nodes
@@ -1711,7 +1711,10 @@ kubectl get componentstatuses
 
 [Descarga PNG](img/kubernetes-cheat-sheet.png)
 
-## Agradecimientos
+## Agradecimientos 🎁
 
 Esta guía ha sido creada a partir de multitud de tutoriales que he hecho, son mis apuntes personales. Pero quiero hacer una especial mención a [Pelado Nerd](https://www.youtube.com/c/PeladoNerd), espero que la guía sea como el Pelado manda.
 
+
+---
+[Manu](https://vergaracarmona.es) 😊
