@@ -1,11 +1,75 @@
 # Índice
-- [Componentes](#componentes)
-- [Recursos Kubernetes](#recursos-kubernetes)
-- [Instalación kubctl y primeros pasos](#instalación-kubctl-y-primeros-pasos)
-- [Manifiestos de Pelado Nerd](#manifiestos-de-pelado-nerd)
-- [Ejemplo de un YAML para un pod básico de busybox](#ejemplo-de-un-yaml-para-un-pod-básico-de-busybox)
-- [Cheatsheet kubernetes](#cheatsheet-kubernetes)
-- [Agradecimientos](#agradecimientos)
+- [Índice](#índice)
+- [Guía Kubernetes](#guía-kubernetes)
+  - [Componentes](#componentes)
+  - [Recursos Kubernetes](#recursos-kubernetes)
+  - [Instalación kubctl y primeros pasos](#instalación-kubctl-y-primeros-pasos)
+    - [kind](#kind)
+    - [minikube](#minikube)
+    - [Digital Ocean](#digital-ocean)
+    - [Resultados de kubectl con cololes: kubecolors](#resultados-de-kubectl-con-cololes-kubecolors)
+    - [Resumen conexión de cluster Digital Ocean](#resumen-conexión-de-cluster-digital-ocean)
+    - [Ayuda de kubeclt](#ayuda-de-kubeclt)
+  - [Manifiestos de Pelado Nerd](#manifiestos-de-pelado-nerd)
+    - [Manifiesto de POD](#manifiesto-de-pod)
+    - [Otro Manifiesto de POD](#otro-manifiesto-de-pod)
+    - [Manifiesto de Deployment](#manifiesto-de-deployment)
+    - [Manifiesto de daemonset](#manifiesto-de-daemonset)
+    - [Manifiesto de statefulset](#manifiesto-de-statefulset)
+    - [Manifiesto cluster ip](#manifiesto-cluster-ip)
+      - [Pod Networking](#pod-networking)
+      - [Kube-proxy](#kube-proxy)
+    - [Manifiesto nodeport](#manifiesto-nodeport)
+    - [Manifiesto load balancer](#manifiesto-load-balancer)
+    - [Manifiesto versiones e ingress](#manifiesto-versiones-e-ingress)
+    - [Manifiesto configmap](#manifiesto-configmap)
+    - [Manifiesto secret](#manifiesto-secret)
+    - [Manifiesto kustomization](#manifiesto-kustomization)
+    - [stern](#stern)
+  - [Ejemplo de un YAML para un pod básico de busybox](#ejemplo-de-un-yaml-para-un-pod-básico-de-busybox)
+  - [Cheatsheet kubernetes](#cheatsheet-kubernetes)
+    - [Visualizar información de los recursos](#visualizar-información-de-los-recursos)
+      - [Nodes](#nodes)
+      - [ods](#ods)
+      - [Namespaces](#namespaces)
+      - [Deployments](#deployments)
+      - [Services](#services)
+      - [DaemonSets](#daemonsets)
+      - [Events](#events)
+      - [Logs](#logs)
+      - [Service Accounts](#service-accounts)
+      - [ReplicaSets](#replicasets)
+      - [Roles](#roles)
+      - [Secrets](#secrets)
+      - [ConfigMaps](#configmaps)
+      - [Ingress](#ingress)
+      - [PersistentVolume](#persistentvolume)
+      - [PersistentVolumeClaim](#persistentvolumeclaim)
+      - [StorageClass](#storageclass)
+      - [MultipleResources](#multipleresources)
+    - [Modificar atributos de los recursos](#modificar-atributos-de-los-recursos)
+      - [Taint](#taint)
+      - [Labels](#labels)
+      - [Cordon/Uncordon](#cordonuncordon)
+      - [Drain](#drain)
+      - [Nodes/Pods](#nodespods)
+      - [Deployments/Namespaces](#deploymentsnamespaces)
+      - [Services](#services-1)
+      - [DaemonSets](#daemonsets-1)
+      - [ServiceAccounts](#serviceaccounts)
+      - [Annotate](#annotate)
+    - [Añadir recursos](#añadir-recursos)
+      - [Crear Pod](#crear-pod)
+      - [Crear un Service](#crear-un-service)
+      - [Crear Deployment](#crear-deployment)
+      - [Interactive Pod](#interactive-pod)
+      - [Salida de YAMLto en un fichero](#salida-de-yamlto-en-un-fichero)
+      - [Ayuda](#ayuda)
+    - [Solicitaciones](#solicitaciones)
+      - [Llamar a la API](#llamar-a-la-api)
+      - [Información del Cluster](#información-del-cluster)
+    - [Resumen en una imagen](#resumen-en-una-imagen)
+  - [Agradecimientos](#agradecimientos)
 
 
 # Guía Kubernetes
@@ -117,7 +181,7 @@ kubectl get nodes
 
 ![](img/get-nodes.png)
 
-### Resultados de kubectl con cololes: kubcolors
+### Resultados de kubectl con cololes: kubecolors
 Para verlo con colores se puede instalar el plugin de kubectl que se llama *[kubecolors](https://github.com/hidetatz/kubecolor)*
 
 *En ubuntu:*
@@ -331,7 +395,7 @@ kubectl delete pod nginx
 ```
 Como no se creo la orden para mantener siempre un pod, el pod desapareció. 
 
-##Manifiestos del Pelado Nerd
+### Otro Manifiesto de POD
 
 Otro manifiesto de un pod del [pelado Nerd](https://github.com/pablokbs/peladonerd/tree/master/kubernetes/35) llamado [02-pod.ymal](yaml-del-pelado/02-pod.yaml) es lo mismo pero con más opciones.
 
@@ -1150,7 +1214,7 @@ Esta no es una buena práctica para gestionar secrets.
 
 [KubeSealed](https://github.com/bitnami-labs/sealed-secrets) es un controlador de kubernetes que cifra las credenciales utilizando un certificado.
 
-### manifiesto kustomization
+### Manifiesto kustomization
 
 `kustomization` es una forma de manejar manifiestos más fácilmente. Nos permite con un cliente embebido a kubectl generar manifiestos. 
 
