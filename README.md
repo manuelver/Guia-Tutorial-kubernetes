@@ -982,28 +982,234 @@ Se puede ver que también se crea un load balancer que es el que recibirá todo 
 Crear este balanceador con ingress es lo más común y lo más ágil. Hay otras alternativas como [Traefik](https://traefik.io/)
 
 
+### Manifiesto configmap
+
+`ConfigMap`es un fichero que lo hostear en kubernetes y se puede acceder desde los pods. Sirve para poder introduccir variables, 
+
+Utilizaremos el fichero yaml [12-configmap.yaml](yaml-del-pelado/12-configmap.yaml) como el Pelado manda.
+```
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: game-demo
+data:
+  # property-like keys; each key maps to a simple value
+  player_initial_lives: "3"
+  ui_properties_file_name: "user-interface.properties"
+  #
+  # file-like keys
+  game.properties: |
+    enemy.types=aliens,monsters
+    player.maximum-lives=5
+  user-interface.properties: |
+    color.good=purple
+    color.bad=yellow
+    allow.textmode=true
+
+```
+Y también levantaremos un pod de nginx con el fichero yaml [13-pod-configmap.yaml](yaml-del-pelado/13-pod-configmap.yaml)
+
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+    - name: nginx
+      image: nginx:alpine
+      env:
+        # Define the environment variable
+        - name: PLAYER_INITIAL_LIVES # Nombre de la variable
+          valueFrom:
+            configMapKeyRef:
+              name: game-demo           # El confimap desde donde vienen los valores
+              key: player_initial_lives # La key que vamos a usar
+        - name: UI_PROPERTIES_FILE_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: game-demo
+              key: ui_properties_file_name
+      volumeMounts:
+      - name: config
+        mountPath: "/config"
+        readOnly: true
+  volumes:
+    - name: config
+      configMap:
+        name: game-demo # el nombre del configmap que queremos montar
+        items: # Un arreglo de keys del configmap para crear como archivos
+        - key: "game.properties"
+          path: "game.properties"
+        - key: "user-interface.properties"
+          path: "user-interface.properties"
+
+```
+En este archivo se puede ver como se define la variable de entorno `PLAYER_INITIAL_LIVES` pero el valor se lo asignaremos con el fichero `configmap` con la especificación `valueFrom`. En `configMapKeyRef` tendremos el `name` de la configmap de donde vienen los valores y la `key`que vamos a utilizar.
+
+Además, se va a montar un volumen con `volumeMounts` donde se generarán archivos basados en el `configmap`, indicando el `name`, el path donde se ubicará con `mountPath` y le decimos que sea de solo lectura con `readOnly: true`, es decir, que desde el pod no lo podré modificar. Más abajo se define el volumen para poderlo crear y se indican los `items` para indicar los nombres de los ficheros (`key`) y su ubicación (`path`).
+
+Primero aplicamos el configmap y luego el pod.
+
+![](img/apply-configmap-pod.png)
+
+Si entramos en el pod ngnix y mostramos las variables de entorno encontraremos las que hemos definido con configmap.
+
+![](img/variables-configmap.png)
+
+Y también tendremos los ficheros con los valores definidos en el configmap.
+
+![](img/valores-ficheros-configmap.png)
+
+Esto nos servirá para guardar configuraciones de las aplicaciones que podremos personalizar para cada pod.
+
+### Manifiesto secret
+
+Los `secret` son muy parecidos a los configmap, la diferencia es que el contenido estaŕa codificado en base64. No es seguro, no es un cifrado es una codificación. A simple vista no se puede leer pero los pods si que pueden hacerlo.
+
+Usaremos el fichero yaml bien peladito [14-secret.yaml](yaml-del-pelado/14-secret.yaml).
+```
+apiVersion: v1
+kind: Secret
+metadata:
+  name: db-credentials
+type: Opaque
+data:
+  username: YWRtaW4=
+  password: c3VwM3JwYXNzdzByZAo=
+
+# Esto se puede crear a mano:
+# kubectl create secret generic db-credentials --from-literal=username=admin --from-literal=password=sup3rpassw0rd
+# Docs: https://kubernetes.io/es/docs/concepts/configuration/secret/
+
+```
+
+Para codificar en base64
+```
+echo -n "admin" | base64
+```
+```
+echo -n "sup3rpassw0rd" | base64
+```
+Y para descodificar
+```
+echo -n "YWRtaW4=" | base64 -d
+```
+```
+echo -n "c3VwM3JwYXNzdzByZA==" | base64 -d
+```
+
+![](img/base64.png)
 
 
+*Recomendación*: Revisar la documentación: https://kubernetes.io/es/docs/concepts/configuration/secret/
+
+También se puede crear el `secret` a mano:
+```
+kubectl create secret generic db-credentials --from-literal=username=admin
+```
+
+Para probarlo utilizaremos otro pod nginx, también del Pelado Nerd, llamado [15-pod-secret.yaml](yaml-del-pelado/15-pod-secret.yaml)
+
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx:alpine
+    env:
+    - name: MI_VARIABLE
+      value: "pelado"
+    - name: MYSQL_USER
+      valueFrom:
+        secretKeyRef:
+          name: db-credentials
+          key: username
+    - name: MYSQL_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: db-credentials
+          key: password
+    ports:
+    - containerPort: 80
+```
+
+En las variables `env` tendremos el usuario y el password de mysql con los `name` MYSQL_USER y MYSQL_PASSWORD que cogerán el valor con `secretKeyRef` de db-credentials, que es el nombre del secret del manifiesto anterior.
+
+Así que aplicamos los manifiestos y comprobamos 
+
+![](img/apply-secret-env.png)
+
+<span style="color:red;font-size:2em;font-weight:bold;">
+Esta no es una buena práctica para gestionar secrets. 
+</span>
 
 
+[KubeSealed](https://github.com/bitnami-labs/sealed-secrets) es un controlador de kubernetes que cifra las credenciales utilizando un certificado.
 
+### manifiesto kustomization
 
+`kustomization` es una forma de manejar manifiestos más fácilmente. Nos permite con un cliente embebido a kubectl generar manifiestos. 
 
+Utilizaremos el fichero del Pelado Nerd [kustomization.yaml](yaml-del-pelado/kustomization.yaml)
 
+```
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
 
+commonLabels:
+  app: ejemplo
 
+resources:
+- 15-pod-secret.yaml
 
+secretGenerator:
+- name: db-credentials
+  literals:
+  - username=admin
+  - password=secr3tpassw0rd!
 
+images:
+- name: nginx
+  newTag: latest
 
-> Continuará....
+```
+Con una especie de plugins podremos, por ejemplo: 
+- Taguear todos los manifiestos. (`commonLabels`).
+- Generar un secret (En el yaml no se siguen buenas prácticas para los secret) (`secretGenerator`).
+- Cambiar una imagen (`images`)
 
+Primero instalaremos los paquetes necesarios para que funcione.
+```
+sudo apt update && sudo snap install kustomize
+```
+Luego tendremos que construir el archivo con el comando, que leerá el archivo `kustomization.yaml` y hará lo que tenga que hacer.
+```
+kustomize build .
+```
+En concreto, creará el secreto basado en el literal del fichero yaml y creo el pod que se indico en `resource`. Además metió la label en la metadata y cambio la imagen por `nginx:latest`.
 
+![](img/kustomizame-esta.png)
 
+Podemos borrar el pod y volver a correr el mismo comando kustomize con una tubería.
+```
+kustomize build . | kubectl apply -f -
 
+```
+Se puede ver que ha cambiado el hash de los `name`
 
+![](img/re-kustomize.png)
 
+Si cambiamos algo del fichero yaml y volvemos a correr el comando kustomize, volverá a cambiar el hash. Guarda versiones.
 
+### stern
 
+`stern` es una utilidad súper simple que permite especificar tanto el id del pod como el id del contenedor como expresiones regulares. Cualquier coincidencia será seguida y la salida es multiplexada, prefijada con el id del pod y el id del contenedor, y codificada por colores para el consumo humano 
+
+![](img/Captura-del-Pelado-stern.png)
 
 
 ---
@@ -1438,8 +1644,10 @@ kubectl get componentstatuses
 ```
 ### Resumen en una imagen
 ![](img/kubernetes-cheat-sheet.png)
+
 [Descarga PNG](img/kubernetes-cheat-sheet.png)
 
 ## Agradecimientos
 
 Esta guía ha sido creada a partir de multitud de tutoriales que he hecho, son mis apuntes personales. Pero quiero hacer una especial mención a [Pelado Nerd](https://www.youtube.com/c/PeladoNerd), espero que la guía sea como el Pelado manda.
+
