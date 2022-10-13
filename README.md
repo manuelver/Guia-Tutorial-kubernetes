@@ -6,6 +6,14 @@
   - [Instalación kubctl y primeros pasos 🚀](#instalación-kubctl-y-primeros-pasos-)
     - [kind](#kind)
     - [minikube](#minikube)
+    - [MicroK8s](#microk8s)
+      - [Instalación MicroK8s](#instalación-microk8s)
+      - [Unirse al grupo](#unirse-al-grupo)
+      - [Comprobar estado](#comprobar-estado)
+      - [Acceso a Kubernetes](#acceso-a-kubernetes)
+      - [Desplegar una aplicación](#desplegar-una-aplicación)
+      - [Utilizar complementos](#utilizar-complementos)
+      - [Iniciando y deteniendo MicroK8s](#iniciando-y-deteniendo-microk8s)
     - [Digital Ocean](#digital-ocean)
     - [Resultados de kubectl con cololes: kubecolors](#resultados-de-kubectl-con-cololes-kubecolors)
     - [Resumen conexión de cluster Digital Ocean](#resumen-conexión-de-cluster-digital-ocean)
@@ -158,6 +166,80 @@ En **Linux**, podemos instalar kind https://kind.sigs.k8s.io/
 También podemos instalar minikube https://minikube.sigs.k8s.io/docs/ que instala todos los componentes de kubernetes en una MV y además tiene una serie de plugins para darle funcionalidades con una serie de paquetes precinfigurados.
 
 ![](img/minikube.png)
+
+### MicroK8s
+
+MicroK8s instalará un Kubernetes mínimo y ligero que puede ejecutar y utilizar en prácticamente cualquier máquina.
+
+[*Instalación microk8s*](https://microk8s.io/docs/getting-started)
+#### Instalación MicroK8s
+ Se puede instalar con un snap:
+
+    sudo snap install microk8s --classic --channel=1.25
+
+#### Unirse al grupo
+
+MicroK8s crea un grupo para permitir el uso sin problemas de los comandos que requieren privilegios de administrador. Para añadir su usuario actual al grupo y obtener acceso al directorio de caché .kube, ejecute los siguientes dos comandos:
+
+	sudo usermod -a -G microk8s $USER
+	sudo chown -f -R $USER ~/.kube
+
+También tendrá que volver a entrar en la sesión para que la actualización del grupo se lleve a cabo:
+
+	su - $USER
+
+#### Comprobar estado
+
+MicroK8s tiene un comando incorporado para mostrar su estado. Durante la instalación puede utilizar el indicador --wait-ready para esperar a que los servicios de Kubernetes se inicialicen:
+```
+  microk8s status --wait-ready
+```
+
+#### Acceso a Kubernetes
+
+MicroK8s incluye su propia versión de kubectl para acceder a Kubernetes. Utilícelo para ejecutar comandos para monitorear y controlar su Kubernetes. Por ejemplo, para ver su nodo:
+
+	microk8s kubectl get nodes
+
+...o para ver los servicios en ejecución:
+
+	microk8s kubectl get services
+
+MicroK8s utiliza un comando kubectl con espacio de nombre para evitar conflictos con cualquier instalación existente de kubectl. Si usted no tiene una instalación existente, es más fácil añadir un alias (añadir a ~/.bash_aliases) como este:
+
+	alias kubectl='microk8s kubectl'
+
+#### Desplegar una aplicación
+
+Por supuesto, Kubernetes está pensado para desplegar aplicaciones y servicios. Puedes usar el comando kubectl para hacerlo como con cualquier Kuberenetes. Prueba a instalar una app de demostración:
+
+	microk8s kubectl create deployment nginx --image=nginx
+
+Puede tardar uno o dos minutos en instalarse, pero puedes comprobar el estado:
+
+	microk8s kubectl get pods
+
+#### Utilizar complementos
+
+MicroK8s utiliza el mínimo de componentes para un Kubernetes puro y ligero. ¡Sin embargo, hay un montón de características adicionales disponibles con unas pocas pulsaciones de teclas utilizando "add-ons" - componentes pre-empaquetados que proporcionarán capacidades adicionales para su Kubernetes, desde la simple gestión de DNS hasta el aprendizaje automático con Kubeflow!
+
+Para empezar se recomienda añadir la gestión de DNS para facilitar la comunicación entre servicios. Para las aplicaciones que necesitan almacenamiento, el complemento "storage" proporciona espacio de directorio en el host. Esto es fácil de configurar:
+
+	microk8s enable dns storage
+
+[Lista completa de complementos](https://microk8s.io/docs/addons#heading--list)
+
+#### Iniciando y deteniendo MicroK8s
+
+MicroK8s continuará funcionando hasta que usted decida detenerlo. Puede detener e iniciar MicroK8s con estos simples comandos:
+
+	microk8s stop
+
+... detendrá MicroK8s y sus servicios. Puede iniciar de nuevo en cualquier momento ejecutando
+
+	microk8s start
+
+Tenga en cuenta que **si deja MicroK8s funcionando, se reiniciará automáticamente después de un reinicio.** Si no quiere que esto ocurra, simplemente recuerde ejecutar microk8s stop antes de apagar.
 
 ### Digital Ocean
 En esta guía utilizaré [DigitalOcean](https://m.do.co/c/98c9ca613f37), con 3 nodos kubernetes de los baratitos.
