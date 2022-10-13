@@ -187,6 +187,9 @@ MicroK8s crea un grupo para permitir el uso sin problemas de los comandos que re
 También tendrá que volver a entrar en la sesión para que la actualización del grupo se lleve a cabo:
 
 	su - $USER
+Y se comprueba examinando los grupos de pertenencia del usuario:
+
+	id -nG
 
 #### Comprobar estado
 
