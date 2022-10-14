@@ -158,14 +158,45 @@ Ponemos `--cliente=true` porque si no se intentaría conectar a un clúster kube
 
 ### kind
 
-En **Linux**, podemos instalar kind https://kind.sigs.k8s.io/
+En **Linux**, podemos instalar [kind](https://kind.sigs.k8s.io/)
 
 ![](img/kind.png)
+
+[Guía de instalación de Kind](https://kind.sigs.k8s.io/docs/user/quick-start)
+
+En Linux tan solo hay que usar los siguientes comandos:
+
+```
+curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.16.0/kind-linux-amd64
+chmod +x ./kind
+sudo mv ./kind /usr/local/bin/kind
+```
+
+Una vez instalado, la creación de un clúster es tan sencillo como este comando:
+
+```
+kind create cluster
+```
+
+Para listar los clústeres:
+
+```sh
+kind get clusters
+```
+
+Para eliminarlo:
+
+```sh
+kind delete cluster
+```
+
 
 ### minikube
 También podemos instalar minikube https://minikube.sigs.k8s.io/docs/ que instala todos los componentes de kubernetes en una MV y además tiene una serie de plugins para darle funcionalidades con una serie de paquetes precinfigurados.
 
 ![](img/minikube.png)
+
+
 
 ### MicroK8s
 
