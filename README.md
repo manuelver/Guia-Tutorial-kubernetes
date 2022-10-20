@@ -1,9 +1,9 @@
 # Índice 📎
 - [Índice 📎](#índice-)
-- [Guía Kubernetes 👓](#guía-kubernetes-)
-  - [Componentes 🧩](#componentes-)
-  - [Recursos Kubernetes 🛞](#recursos-kubernetes-)
-  - [Instalación kubctl y primeros pasos 🚀](#instalación-kubctl-y-primeros-pasos-)
+- [Guía Kubernetes](#guía-kubernetes)
+  - [Componentes](#componentes)
+  - [Recursos Kubernetes](#recursos-kubernetes)
+  - [Instalación kubctl y primeros pasos](#instalación-kubctl-y-primeros-pasos)
     - [kind](#kind)
     - [minikube](#minikube)
     - [MicroK8s](#microk8s)
@@ -18,8 +18,8 @@
     - [Resultados de kubectl con cololes: kubecolors](#resultados-de-kubectl-con-cololes-kubecolors)
     - [Resumen conexión de cluster Digital Ocean](#resumen-conexión-de-cluster-digital-ocean)
     - [Ayuda de kubeclt](#ayuda-de-kubeclt)
-  - [Ejemplo de un YAML para un pod básico de busybox 📃](#ejemplo-de-un-yaml-para-un-pod-básico-de-busybox-)
-  - [Manifiestos de Pelado Nerd 📜](#manifiestos-de-pelado-nerd-)
+  - [Ejemplo de un YAML para un pod básico de busybox](#ejemplo-de-un-yaml-para-un-pod-básico-de-busybox)
+  - [Manifiestos de Pelado Nerd](#manifiestos-de-pelado-nerd)
     - [Manifiesto de POD](#manifiesto-de-pod)
     - [Otro Manifiesto de POD](#otro-manifiesto-de-pod)
     - [Manifiesto de Deployment](#manifiesto-de-deployment)
@@ -35,7 +35,7 @@
     - [Manifiesto secret](#manifiesto-secret)
     - [Manifiesto kustomization](#manifiesto-kustomization)
     - [stern](#stern)
-  - [Cheatsheet kubernetes 🔖](#cheatsheet-kubernetes-)
+  - [Cheatsheet kubernetes](#cheatsheet-kubernetes)
     - [Visualizar información de los recursos](#visualizar-información-de-los-recursos)
       - [Nodes](#nodes)
       - [ods](#ods)
@@ -80,7 +80,7 @@
   - [Agradecimientos 🎁](#agradecimientos-)
 
 
-# Guía Kubernetes 👓
+# Guía Kubernetes
 
 Kubernetes es un sistema de código libre para la automatización del despliegue, ajuste de escala y manejo de aplicaciones en contenedores que fue originalmente diseñado por Google y donado a la Cloud Native Computing Foundation (parte de la Linux Foundation). Soporta diferentes entornos para la ejecución de contenedores, incluido Docker y su misión es la orquestación de dichos contenedores.
 
@@ -88,7 +88,7 @@ Es declarativo.
 
 ![](img/kubernetes-declarativo.png)
 
-## Componentes 🧩
+## Componentes
 ![](img/Componentes_kubernetes.png)
 
 - **etcd** - Guarda el estado de Kubernetes
@@ -105,7 +105,7 @@ No es buena idea correr tráfico de clusterización en equipos personales.
 
 
 ---
-## Recursos Kubernetes 🛞
+## Recursos Kubernetes
 
 ![](img/Recursos-kubernetes.png)
 
@@ -126,7 +126,7 @@ Los **namespace** son clusters virtuales respaldados por el mismo clúster físi
 
 
 ---
-## Instalación kubctl y primeros pasos 🚀
+## Instalación kubctl y primeros pasos
 
 Lo primero es instalar kubectl.
 
@@ -467,7 +467,7 @@ El pod es nuevo, tiene otro hash. Así que esto asegura que siempre estén el mi
 
 
 ---
-## Ejemplo de un YAML para un pod básico de busybox 📃
+## Ejemplo de un YAML para un pod básico de busybox
 ```
 apiVersion: v1kind: Podmetadata:name: busyboxspec:containers:- image: busybox:1.28.4command:- sleep- "3600"name: busyboxrestartPolicy: Always
 ```
@@ -518,7 +518,7 @@ kubectl apply -f serviceaccount.yaml
 
 
 ---
-## Manifiestos de Pelado Nerd 📜
+## Manifiestos de Pelado Nerd
 ### Manifiesto de POD
 Ahora utilizaremos un manifiesto de un pod del [pelado Nerd](https://github.com/pablokbs/peladonerd/tree/master/kubernetes/35) llamado [01-pod.ymal](yaml-del-pelado/01-pod.yaml)
 
@@ -1444,7 +1444,7 @@ Si cambiamos algo del fichero yaml y volvemos a correr el comando kustomize, vol
 ![](img/Captura-del-Pelado-stern.png)
 
 ---
-## Cheatsheet kubernetes 🔖
+## Cheatsheet kubernetes
 
 ### Visualizar información de los recursos
 #### Nodes
