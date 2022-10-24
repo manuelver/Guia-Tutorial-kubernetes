@@ -79,6 +79,7 @@
     - [Resumen en una imagen](#resumen-en-una-imagen)
   - [Helm: Control de despliegues en Kubernetes](#helm-control-de-despliegues-en-kubernetes)
     - [Instalación de Helm](#instalación-de-helm)
+    - [Opciones del comando helm](#opciones-del-comando-helm)
     - [Crear una release](#crear-una-release)
   - [Agradecimientos 🎁](#agradecimientos-)
 
@@ -1852,10 +1853,26 @@ La idea de Helm es controlar un **despliegue** (lo llaman release) de tal forma 
 
 ### Instalación de Helm
 
-En nuestro ubuntu es muy sencillo:
+En nuestro ubuntu es muy sencillo. 
+
+- Con snap:
 
 ```shell
 snap install helm --classic
+```
+
+- Con apt:
+
+```shell
+curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
+
+sudo apt-get install apt-transport-https --yes
+
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+
+sudo apt-get update
+
+sudo apt-get install helm
 ```
 
  **¡Nota! El binario está en /snap/bin/helm, si no está en la ruta, puede incluirlo o crear un enlace simbólico, por ejemplo, a /usr/sbin/helm.*
@@ -1871,6 +1888,38 @@ helm init
 **¡Nota 2! helm puede tardar un minuto en ponerse en marcha. Espere hasta que pueda interactuar con él.*
 
 Ahora, podemos crear un release.
+
+### Opciones del comando helm
+
+  helm [comando]
+
+  comando    | Descripción
+  :---------:|---
+  completion | Generar scripts de autocompletado para el shell especificado
+  create     | Crear un nuevo chart con el nombre indicado
+  dependency | Gestionar las dependencias de un chart
+  env        | Información del entorno de cliente
+  get        | Descargar información ampliada de la release nombrada
+  help       | Ayuda sobre cualquier comando
+  history    | Obtener el historial de release
+  install    | Instalar una chart
+  lint       | Examinar posibles incidencias de una chart
+  list       | listar releases
+  package    | Empaquetar un directorio chart en un fichero chart
+  plugin     | Instalar (install), listar (list) o desinstalar (uninstall) plugins Helm
+  pull       | Descargar una chart de un repositorio y (opcional) desempaquetarlo en directorio local
+  repo       | Añadir (add), listar (list), borrar (remove), actualizar (update), e indexar (index) repositorios chart
+  rollback   | roll back un release a la revisión anterior
+  search     | Buscar keyword en las charts
+  show       | Mostrar información de una chart
+  status     | Mostrar el estado de una release nombrada
+  template   | Representar localmente templates
+  test       | Ejecutar pruebas a una release
+  uninstall  | desinstalar una release
+  upgrade    | Actualizar una release
+  verify     | verificar si una chart en una path ha sido firmada y validada
+  version    | Mostrar información de la version del cliente helm
+
 
 ### Crear una release
 
