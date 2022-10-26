@@ -81,6 +81,10 @@
     - [Instalación de Helm](#instalación-de-helm)
     - [Opciones del comando helm](#opciones-del-comando-helm)
     - [Crear una release](#crear-una-release)
+  - [K9s: Otro estilo de CLI para k8s](#k9s-otro-estilo-de-cli-para-k8s)
+    - [Instalar k9s en Ubuntu](#instalar-k9s-en-ubuntu)
+    - [Argumentos CLI](#argumentos-cli)
+    - [Key Bindings](#key-bindings)
   - [Agradecimientos 🎁](#agradecimientos-)
 
 
@@ -1998,6 +2002,65 @@ helm install maria -f values.yaml bitnami/mariadb
 ```
 
 Y tendríamos el deployment con una base de datos creada y un usuario vinculado a ella.
+
+## K9s: Otro estilo de CLI para k8s
+K9s es una interfaz de usuario basada en un terminal para interactuar con sus clústeres Kubernetes. El objetivo de este proyecto es facilitar la navegación, la observación y la gestión de sus aplicaciones desplegadas en la naturaleza. K9s observa continuamente a Kubernetes en busca de cambios y ofrece comandos posteriores para interactuar con sus recursos observados.
+
+### Instalar k9s en Ubuntu
+
+```shell
+sudo snap install 
+```
+
+### Argumentos CLI
+
+K9s CLI viene con una vista de argumentos que puede utilizar para lanzar la herramienta con diferente configuración.
+```shell
+# Lista de todas las opciones de la CLI disponibles
+k9s help
+
+# Obtener información sobre el tiempo de ejecución de K9s (registros, configuraciones, etc.)
+k9s info
+
+# Ejecutar K9s en un espacio de nombres determinado.
+k9s -n mycoolns
+
+# Ejecutar K9s y lanzarlo en la vista de pod a través del comando pod.
+k9s -c pod
+
+# Inicie K9s en un contexto KubeConfig no predeterminado
+k9s --context coolCtx
+
+# Inicie K9s en modo de sólo lectura - con todos los comandos de modificación deshabilitados
+k9s --readonly
+```
+
+### Key Bindings
+
+Acción | Comando | Comentario
+---|---|---
+Mostrar los mnemónicos de teclado activos y la ayuda | `?` 	 
+Mostrar todos los alias y recursos disponibles en el clúster | `ctrl-a` o `:alias` 	 
+Salir de K9s | `:q`, `ctrl-c` 	 
+Ver un recurso de Kubernetes utilizando el singular/plural o el nombre corto | `:po`⏎ | acepta el singular, el plural, el nombre corto o el alias, es decir, pod o pods
+Ver un recurso de Kubernetes en un espacio de nombres dado | `:alias namespace`⏎ 	 
+Filtrar una vista de recursos dado un filtro | `/filter`⏎ | Regex2 soportado ie `fred\|blee` para filtrar recursos llamados fred o blee
+Filtro regex inverso | `/ ! filter`⏎ | Guarda todo lo que no coincide. No se ha implementado para los registros.
+Filtrar la vista de recursos por etiquetas | `/-l label-selector`⏎ 	 
+Buscar difusamente un recurso dado un filtro | `/-f filter`⏎ 	 
+Sale del modo de vista/comando/filtro | `<esc>` 	 
+Mapeo de teclas para describir, ver, editar, ver registros,... | `d`,`v`, `e`, `l`,... 	 
+Para ver y cambiar a otro contexto de Kubernetes | `:ctx`⏎ 	 
+Para ver y cambiar a otro contexto de Kubernetes | `:ctx context-name`⏎ 	 
+Para ver y cambiar a otro espacio de nombres de Kubernetes | `:ns`⏎ 	 
+Para ver todos los recursos guardados | `:screendump o sd`⏎ 	 
+Para eliminar un recurso (TAB y ENTER para confirmar) | `ctrl-d` 	 
+Para eliminar un recurso (¡no hay diálogo de confirmación!) | `ctrl-k` 	 
+Alternar columnas anchas | `ctrl-w` | Equivalente a kubectl ... -o wide
+Alternar el estado de error | `ctrl-z` | Ver los recursos en estado de error
+Lanzar la vista de pulsos | `:pulsos o pu`⏎ 	 
+Lanzar vista XRay | `:xray RECURSO [NAMESPACE]`⏎ | RECURSO puede ser uno de po, svc, dp, rs, sts, ds, NAMESPACE es opcional
+Lanzar la vista de Popeye | `:popeye o pop`⏎ | Ver https://popeyecli.io
 
 ## Agradecimientos 🎁
 
