@@ -82,7 +82,7 @@
     - [Opciones del comando helm](#opciones-del-comando-helm)
     - [Crear una release](#crear-una-release)
   - [K9s: Otro estilo de CLI para k8s](#k9s-otro-estilo-de-cli-para-k8s)
-    - [Instalar k9s en Ubuntu](#instalar-k9s-en-ubuntu)
+    - [Instalar k9s con el código](#instalar-k9s-con-el-código)
     - [Argumentos CLI](#argumentos-cli)
     - [Key Bindings](#key-bindings)
   - [Agradecimientos 🎁](#agradecimientos-)
@@ -2016,10 +2016,15 @@ Y tendríamos el deployment con una base de datos creada y un usuario vinculado 
 ## K9s: Otro estilo de CLI para k8s
 K9s es una interfaz de usuario basada en un terminal para interactuar con sus clústeres Kubernetes. El objetivo de este proyecto es facilitar la navegación, la observación y la gestión de sus aplicaciones desplegadas en la naturaleza. K9s observa continuamente a Kubernetes en busca de cambios y ofrece comandos posteriores para interactuar con sus recursos observados.
 
-### Instalar k9s en Ubuntu
+### Instalar k9s con el código
 
 ```shell
-sudo snap install 
+## Install go - https://go.dev/doc/install
+## Clone the source code
+git clone https://github.com/derailed/k9s.git && cd k9s
+
+## Build k9s from source
+make build && ./execs/k9s
 ```
 
 ### Argumentos CLI
