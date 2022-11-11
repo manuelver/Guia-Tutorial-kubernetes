@@ -2018,14 +2018,12 @@ K9s es una interfaz de usuario basada en un terminal para interactuar con sus cl
 
 ### Instalar k9s con el código
 
-```shell
-## Install go - https://go.dev/doc/install
-## Clone the source code
-git clone https://github.com/derailed/k9s.git && cd k9s
+Para estar seguro de como se instala lo mejor es mirar la [documentación oficial](https://k9scli.io/topics/install/) o el [repositorio git](https://github.com/derailed/k9s), teniendo en cuenta que actualizan más el repo. Yo lo he instalado así:
 
-## Build k9s from source
-make build && ./execs/k9s
+```shell
+curl -sS https://webinstall.dev/k9s | bash
 ```
+Mira el [enlace webinstall](https://webinstall.dev/k9s/) para más info.
 
 ### Argumentos CLI
 
