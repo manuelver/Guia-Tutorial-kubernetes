@@ -342,6 +342,16 @@ Para eliminarlo:
 kind delete cluster
 ```
 
+En este punto puede interesar crear un cluster con varios nodos y con un controlador de ingress con nginx. Este script lo hará todo por ti: [config_kind_with_ingress.sh](files/config_kind_with_ingress.sh)
+
+Se le debe dar los permisos adecuados al script.
+
+```shell
+chmod +x config_kind_with_ingress.sh
+```
+
+
+
 
 ### minikube
 También podemos instalar minikube https://minikube.sigs.k8s.io/docs/ que instala todos los componentes de kubernetes en una MV y además tiene una serie de plugins para darle funcionalidades con una serie de paquetes precinfigurados.
