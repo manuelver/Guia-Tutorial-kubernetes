@@ -2,7 +2,7 @@
 
 ## Guías 👀
 
-[01 Instalación kubctl](guias/01-kubectl.md) --> [02 Clústers](guias/02-clusters.md) --> [03 manifiestos](guias/03-manifiestos.md) --> [04 Cheatsheet kubernetes](guias/04-cheatsheet.md) --> [05 Helm: Control de despliegues en Kubernetes](guias/05-helm.md) --> [K9s: Otro estilo de CLI para k8s](guias/06-k9s.md)
+[01 Instalación kubctl](guias/01-kubectl.md) --> [02 Clústers](guias/02-clusters.md) --> [03 manifiestos](guias/03-manifiestos.md) --> [04 Cheatsheet kubernetes](guias/04-cheatsheet.md) --> [05 Helm: Control de despliegues en Kubernetes](guias/05-helm.md) --> [06 K9s: Otro estilo de CLI para k8s](guias/06-k9s.md)
 
 **Índice** 📎
 
@@ -151,6 +151,18 @@ Crear el *service account*
 ```shell
 kubectl apply -f serviceaccount.yaml
 ```
+---
+
+Puedes empezar por la guía [01 Instalación kubctl](guias/01-kubectl.md).
+
+Todas las guías:
+
+- [01 Instalación kubctl](guias/01-kubectl.md) 
+- [02 Clústers](guias/02-clusters.md) 
+- [03 manifiestos](guias/03-manifiestos.md) 
+- [04 Cheatsheet kubernetes](guias/04-cheatsheet.md) 
+- [05 Helm: Control de despliegues en Kubernetes](guias/05-helm.md) 
+- [06 K9s: Otro estilo de CLI para k8s](guias/06-k9s.md)
 
 ---
 
