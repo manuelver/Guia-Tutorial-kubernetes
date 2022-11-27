@@ -3,7 +3,10 @@
 **Índice**
 - [Instalación kubectl](#instalación-kubectl)
   - [Ayuda de kubeclt](#ayuda-de-kubeclt)
+  - [Contenido por defecto de un clúster](#contenido-por-defecto-de-un-clúster)
+  - [Manejando contextos](#manejando-contextos)
   - [Resultados de kubectl con colores: kubecolors](#resultados-de-kubectl-con-colores-kubecolors)
+  - [Posibles resultados listando](#posibles-resultados-listando)
 
 ---
 
@@ -114,10 +117,8 @@ Utilice "kubectl options" para obtener una lista de opciones globales de la lín
 
 Una herramienta gráfica para kubectl es *[lens](https://k8slens.dev/)*., Muestra los contenedores de una manera clara y también tiene gráficas (memoria, CPU, etc).
 
-Para mostrar los contextos que están en el fichero kubeconfig o el archivo de configuración de kubectl
-```shell
-kubectl config get-contexts
-```
+
+## Contenido por defecto de un clúster
 
 Para mostrar los namespaces:
 ```shell
@@ -152,6 +153,39 @@ Inmediatamente muestro los pods y se puede ver como lo está creando de nuevo.
 
 El pod es nuevo, tiene otro hash. Así que esto asegura que siempre estén el mismo número de pods.
 
+## Manejando contextos
+
+Para mostrar los contextos que están en el fichero kubeconfig o el archivo de configuración de kubectl
+```shell
+kubectl config get-contexts
+```
+Para ver más detalles 
+```shell
+kubectl config view
+```
+Para ver el contexto actual
+```shell
+kubectl config current-context
+```
+Para usar un context ya introducido
+
+```shell
+kubectl config use-context Nombre-clúster
+```
+Introducir un contexto
+```shell
+kubectl config set-credentials kubeuser/foo.kubernetes.com --username=kubeuser --password=kubepassword
+```
+Guardar permanentemente un namespace para todos los comandos kubectl posteriores en ese contexto.
+```shell
+kubectl config set-context --current --namespace=ggckad-s2
+```
+Borrar el usuario foo
+```shell
+kubectl config unset users.foo 
+```
+
+
 ## Resultados de kubectl con colores: kubecolors
 Para verlo con colores se puede instalar el plugin de kubectl que se llama *[kubecolors](https://github.com/hidetatz/kubecolor)*
 
@@ -176,6 +210,36 @@ kubecolor --context=do-ams3-k8s-1-24-4-do-0-ams3-..... get pods -o json
 alias kubectl="kubecolor"
 ```
 ![](../img/get-nodes-color.png)
+
+## Posibles resultados listando
+
+Podemos ver los eventos
+
+Con la opción `--watch` podremos mantener el listado que pidamos en stream, se actualizará cada n segundos. Si además introducimos `--output-watch-events` veremos los eventos del pod. `-A` es para seleccionarlos todos.
+
+```shell
+k get pods --watch --output-watch-events -A
+```
+
+Se puede seleccionar eventos según un tipo de resultado. Por ejemplo, para seleccionar los que tengan de tipo `Warning`.
+
+```shell
+k get events -w --field-selector=type=Warning -A
+```
+Podemos ver las variables de entorno de un pod con el siguiente comando
+```shell
+kubectl -n main set env pod/nombre-del-pod --list
+```
+Se verán las variables seteadas en el manfiesto y las que tiene el pod por otros mecanismos.
+
+Podemos ver un listado ordenado de los pods por el uso de memoria y de CPU
+```shell
+kubectl top pods -A 
+```
+Y podemos ordenarlos con `--sort-by`
+```shell
+kubectl top pods -A --sort-by='memory'
+```
 
 ---
 
