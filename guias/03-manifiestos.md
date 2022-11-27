@@ -1,7 +1,7 @@
 
-# Manifiestos de Pelado Nerd
+# Ejemplos de manifiestos
 **Índice**
-- [Manifiestos de Pelado Nerd](#manifiestos-de-pelado-nerd)
+- [Ejemplos de manifiestos](#ejemplos-de-manifiestos)
   - [Manifiesto de POD](#manifiesto-de-pod)
   - [Otro Manifiesto de POD](#otro-manifiesto-de-pod)
   - [Manifiesto de Deployment](#manifiesto-de-deployment)
