@@ -6,6 +6,7 @@
   - [Instalación de Helm](#instalación-de-helm)
   - [Opciones del comando helm](#opciones-del-comando-helm)
   - [Crear una release](#crear-una-release)
+  - [Apuntes más completos](#apuntes-más-completos)
 
 ## ¿Qué es Helm?
 
@@ -69,32 +70,32 @@ Ahora, podemos crear un release.
 
   helm [comando]
 
-  comando    | Descripción
-  :---------:|---
-  completion | Generar scripts de autocompletado para el shell especificado
-  create     | Crear un nuevo chart con el nombre indicado
-  dependency | Gestionar las dependencias de un chart
-  env        | Información del entorno de cliente
-  get        | Descargar información ampliada de la release nombrada
-  help       | Ayuda sobre cualquier comando
-  history    | Obtener el historial de release
-  install    | Instalar una chart
-  lint       | Examinar posibles incidencias de una chart
-  list       | listar releases
-  package    | Empaquetar un directorio chart en un fichero chart
-  plugin     | Instalar (install), listar (list) o desinstalar (uninstall) plugins Helm
-  pull       | Descargar una chart de un repositorio y (opcional) desempaquetarlo en directorio local
-  repo       | Añadir (add), listar (list), borrar (remove), actualizar (update), e indexar (index) repositorios chart
-  rollback   | roll back un release a la revisión anterior
-  search     | Buscar keyword en las charts
-  show       | Mostrar información de una chart
-  status     | Mostrar el estado de una release nombrada
-  template   | Representar localmente templates
-  test       | Ejecutar pruebas a una release
-  uninstall  | desinstalar una release
-  upgrade    | Actualizar una release
-  verify     | verificar si una chart en una path ha sido firmada y validada
-  version    | Mostrar información de la version del cliente helm
+  |  comando   | Descripción                                                                                             |
+  | :--------: | ------------------------------------------------------------------------------------------------------- |
+  | completion | Generar scripts de autocompletado para el shell especificado                                            |
+  |   create   | Crear un nuevo chart con el nombre indicado                                                             |
+  | dependency | Gestionar las dependencias de un chart                                                                  |
+  |    env     | Información del entorno de cliente                                                                      |
+  |    get     | Descargar información ampliada de la release nombrada                                                   |
+  |    help    | Ayuda sobre cualquier comando                                                                           |
+  |  history   | Obtener el historial de release                                                                         |
+  |  install   | Instalar una chart                                                                                      |
+  |    lint    | Examinar posibles incidencias de una chart                                                              |
+  |    list    | listar releases                                                                                         |
+  |  package   | Empaquetar un directorio chart en un fichero chart                                                      |
+  |   plugin   | Instalar (install), listar (list) o desinstalar (uninstall) plugins Helm                                |
+  |    pull    | Descargar una chart de un repositorio y (opcional) desempaquetarlo en directorio local                  |
+  |    repo    | Añadir (add), listar (list), borrar (remove), actualizar (update), e indexar (index) repositorios chart |
+  |  rollback  | roll back un release a la revisión anterior                                                             |
+  |   search   | Buscar keyword en las charts                                                                            |
+  |    show    | Mostrar información de una chart                                                                        |
+  |   status   | Mostrar el estado de una release nombrada                                                               |
+  |  template  | Representar localmente templates                                                                        |
+  |    test    | Ejecutar pruebas a una release                                                                          |
+  | uninstall  | desinstalar una release                                                                                 |
+  |  upgrade   | Actualizar una release                                                                                  |
+  |   verify   | verificar si una chart en una path ha sido firmada y validada                                           |
+  |  version   | Mostrar información de la version del cliente helm                                                      |
 
 
 ## Crear una release
@@ -174,6 +175,12 @@ helm install maria -f values.yaml bitnami/mariadb
 ```
 
 Y tendríamos el deployment con una base de datos creada y un usuario vinculado a ella.
+
+## Apuntes más completos
+
+_En breve subiré un pdf con los apuntes de un curso bastante completo_
+
+<br> <br>
 
 ---
 
