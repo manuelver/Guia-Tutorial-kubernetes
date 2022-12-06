@@ -182,8 +182,6 @@ El siguiente documento contiene los apuntes tomados en el curso «[Helm 3: Despl
 
 [Apuntes del Curso Helm - Diciembre 2022](https://vergaracarmona.es/wp-content/uploads/2022/12/Curso_Helm_vergaracarmona.es_.pdf)
 
-<br> <br>
-
 ---
 
 Puedes seguir con la guía [06 K9s: Otro estilo de CLI para k8s](06-k9s.md).
