@@ -178,6 +178,8 @@ Y tendríamos el deployment con una base de datos creada y un usuario vinculado 
 
 ## Apuntes más completos
 
+Este documento contiene los apuntes tomados en el curso «[Helm 3: Despliega aplicaciones en Kubernetes](https://www.udemy.com/course/helm-3-despliega-aplicaciones-en-kubernetes/)» impartido por [Apasoft Training](https://www.linkedin.com/in/apasoft-training-b38b36134/) en diciembre de 2022. El curso udemy consta de 5 horas aproximadamente de vídeo-tutoriales. Las prácticas aquí contenidas tuvieron una duración de alrededor de unas 12 horas.
+
 _En breve subiré un pdf con los apuntes de un curso bastante completo_
 
 <br> <br>
