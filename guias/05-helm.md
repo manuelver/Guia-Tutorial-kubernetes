@@ -28,6 +28,8 @@ La idea de Helm es controlar un **despliegue** (lo llaman release) de tal forma 
   - Los hay de todos los tipos (mysql, mongo, Wordpress...).
   - Se pueden descargar y utilizar o ampliar como queramos.
 
+![Arquitectura Helm 3](https://vergaracarmona.es/wp-content/uploads/2022/12/helm-3-arquitectura.png)
+
 ## Instalación de Helm
 
 En nuestro ubuntu es muy sencillo. 
