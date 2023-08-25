@@ -936,7 +936,18 @@ Si cambiamos algo del fichero yaml y volvemos a correr el comando kustomize, vol
 
 ## stern
 
-`stern` es una utilidad súper simple que permite especificar tanto el id del pod como el id del contenedor como expresiones regulares. Cualquier coincidencia será seguida y la salida es multiplexada, prefijada con el id del pod y el id del contenedor, y codificada por colores para el consumo humano 
+[`stern`](https://github.com/stern/stern) es una herramienta de código abierto que facilita la visualización de logs de Kubernetes en tiempo real. Con stern se puede monitorear logs de múltiples contenedores simultáneamente, brindando una vista combinada de la actividad dentro de los Pods.
+
+¿Por qué utilizar stern?
+Kubectl ofrece logs integrados utilizando el comando
+
+```
+kubectl logs
+```
+
+Aunque esto puede funcionar bien en casos simples, carece de sentido para agregar logs de múltiples fuentes con un filtrado adicional de los resultados. Esto puede hacer que su uso sea complicado cuando necesitas monitorear varios Pods o estás trabajando con datos detallados.
+
+Aquí es donde aparece `stern`, de manera súper simple, permite especificar tanto el id del pod como el id del contenedor como expresiones regulares. Cualquier coincidencia será seguida y la salida es multiplexada, prefijada con el id del pod y el id del contenedor, y codificada por colores para el consumo humano.
 
 ![](../img/Captura-del-Pelado-stern.png)
 
