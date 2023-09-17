@@ -17,6 +17,8 @@
 
 ## ¿Qué es Kubernetes?
 
+- Explicación más extendida en la web: [Kubernetes: Una breve introducción](https://vergaracarmona.es/kubernetes-una-breve-introduccion/)
+
 Kubernetes es un sistema de código libre para la automatización del despliegue, ajuste de escala y manejo de aplicaciones en contenedores que fue originalmente diseñado por Google y donado a la Cloud Native Computing Foundation (parte de la Linux Foundation). Soporta diferentes entornos para la ejecución de contenedores, incluido Docker y su misión es la orquestación de dichos contenedores.
 
 Es declarativo.
