@@ -8,16 +8,43 @@
 
 - [Guía-Tutorial Kubernetes 🚀](#guía-tutorial-kubernetes-)
   - [Guías 👀](#guías-)
-  - [¿Qué es Kubernetes?](#qué-es-kubernetes)
+  - [¿Qué es Kubernetes? 🚢](#qué-es-kubernetes-)
   - [Componentes](#componentes)
   - [Recursos Kubernetes](#recursos-kubernetes)
   - [Ejemplo de ficheros YAML](#ejemplo-de-ficheros-yaml)
 - [Agradecimientos 🎁](#agradecimientos-)
 - [Invítame a un café ☕️](#invítame-a-un-café-️)
 
-## ¿Qué es Kubernetes?
+## ¿Qué es Kubernetes? 🚢
 
 - Explicación más extendida en la web: [Kubernetes: Una breve introducción](https://vergaracarmona.es/kubernetes-una-breve-introduccion/)
+- 30daysOfKubernetes [ENG] [Repo](https://github.com/AmanPathak-DevOps/30DaysOfKubernetes)
+
+<details>
+  <summary>Artículos #30DaysOfKubernetes [ENG]</summary>
+  
+  - Day 1 - [Unlocking the Power of Kubernetes: Day 01](https://medium.com/devops-dev/unlocking-the-power-of-kubernetes-day-01-315b367f618d)
+  - Day 2 - [Kubernetes Architecture Part-1](https://blog.devops.dev/day02-kubernetes-architecture-part-1-c09abee5b1f2)
+  - Day 3 - [Worker Node — The Heart of Container Management Part-2](https://blog.devops.dev/day-03-worker-node-the-heart-of-container-management-42d7a062a218)
+  - Day 4 - [Setting up Minikube on Your Local Machine or AWS Instance](https://medium.com/devops-dev/day-04-setting-up-minikube-on-your-local-machine-or-aws-instance-620a4cb57abc)
+  - Day 5 - [Kubeconfig, Services, and Deployments Files Explained](https://blog.devops.dev/day05-kubeconfig-services-and-deployments-files-explained-8733c0cd8b61)
+  - Day 6 - [Deploying Your First Node.js Application on Kubernetes Cluster](https://blog.devops.dev/day06-deploying-your-first-node-js-application-on-kubernetes-cluster-eaabb19bb9fe)
+  - Day 7 - [Mastering Kubernetes Labels, Selectors, and Node Selectors](https://blog.devops.dev/day07-mastering-kubernetes-labels-selectors-and-node-selectors-3df0293b7336)
+  - Day 8 - [ReplicationController & ReplicaSet](https://medium.com/devops-dev/day08-replicationcontroller-replicaset-a0c6f9d98196)
+  - Day 9 - [Deployment Object in Kubernetes](https://blog.devops.dev/day09-deployment-object-in-kubernetes-30b0022bc4ae)
+  - Day 10 - [Setting up a Kubernetes Cluster using kubeadm on AWS EC2 Instances](https://blog.devops.dev/setting-up-a-kubernetes-cluster-master-worker-node-using-kubeadm-on-aws-ec2-instances-ubuntu-22-04-3432859b943b)
+  - Day 11 - [Kubernetes Networking (Services)](https://blog.devops.dev/day11-kubernetes-networking-services-6fb913b059d0)
+  - Day 12 - [Kubernetes Advanced Networking: CNI and Calico](https://blog.devops.dev/day12-kubernetes-advanced-networking-cni-and-calico-ee96734c17bb)
+  - Day 13 - [Kubernetes volumes and liveness probes](https://blog.devops.dev/day13-kubernetes-volumes-and-liveness-probes-ea278ff9bb0f)
+  - Day 14 - [ConfigMaps & Secrets](https://blog.devops.dev/day14-configmaps-secrets-1abb910aeb53)
+  - Day 15 - [Kubernetes Jobs](https://blog.devops.dev/day15-kubernetes-jobs-bd18f55cf1be)
+  - Day 16 - [Kubernetes InitContainer](https://blog.devops.dev/day16-kubernetes-initcontainer-a9df403934ff)
+  - Day 17 - [Kubernetes Pod Lifecycle](https://blog.devops.dev/day17-kubernetes-pod-lifecycle-3a53566421b1)
+  - Day 18 - [Kubernetes Resource Quota and Namespace](https://medium.com/@aman.pathak_51134/day18-kubernetes-resource-quota-and-namespace-6a21045b0d97)
+  - ...
+
+</details>
+<br>
 
 Kubernetes es un sistema de código libre para la automatización del despliegue, ajuste de escala y manejo de aplicaciones en contenedores que fue originalmente diseñado por Google y donado a la Cloud Native Computing Foundation (parte de la Linux Foundation). Soporta diferentes entornos para la ejecución de contenedores, incluido Docker y su misión es la orquestación de dichos contenedores.
 
