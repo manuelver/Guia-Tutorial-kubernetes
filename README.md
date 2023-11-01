@@ -43,6 +43,7 @@
   - Day 18 - [Kubernetes Resource Quota and Namespace](https://medium.com/@aman.pathak_51134/day18-kubernetes-resource-quota-and-namespace-6a21045b0d97)
   - Day 19 - [Kubernetes AutoScaling](https://blog.devops.dev/day19-kubernetes-autoscaling-da9da2c1d983)
   - Day 20 — [Mastering Multi-Cluster Kubernetes with HAProxy](https://blog.devops.dev/day-20-mastering-multi-cluster-kubernetes-with-haproxy-be63b08a4ec7)
+  - Day21 - [Kubernetes Ingress](https://medium.com/@aman.pathak_51134/day21-kubernetes-ingress-f5dddf1599bc)
   - ...
 
 </details>
