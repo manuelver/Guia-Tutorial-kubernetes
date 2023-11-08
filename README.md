@@ -44,6 +44,8 @@
   - Day 19 - [Kubernetes AutoScaling](https://blog.devops.dev/day19-kubernetes-autoscaling-da9da2c1d983)
   - Day 20 — [Mastering Multi-Cluster Kubernetes with HAProxy](https://blog.devops.dev/day-20-mastering-multi-cluster-kubernetes-with-haproxy-be63b08a4ec7)
   - Day21 - [Kubernetes Ingress](https://medium.com/@aman.pathak_51134/day21-kubernetes-ingress-f5dddf1599bc)
+  - Day22 - [Kubernetes StatefulSets](https://blog.devops.dev/day21-kubernetes-statefulsets-2ecf9ca2c5fc)
+  - Day 23 - [Kubernetes DaemonSet](https://medium.com/devops-dev/day-23-kubernetes-daemonset-cbca1ce3d4c1)
   - ...
 
 </details>
