@@ -46,6 +46,10 @@
   - Day21 - [Kubernetes Ingress](https://medium.com/@aman.pathak_51134/day21-kubernetes-ingress-f5dddf1599bc)
   - Day22 - [Kubernetes StatefulSets](https://blog.devops.dev/day21-kubernetes-statefulsets-2ecf9ca2c5fc)
   - Day 23 - [Kubernetes DaemonSet](https://medium.com/devops-dev/day-23-kubernetes-daemonset-cbca1ce3d4c1)
+  - Day 24 - [Exploring Kubernetes Network Policies](https://blog.devops.dev/day-24-exploring-kubernetes-network-policies-0d8e687ff850)
+  - Day 25 - [Kubernetes Operators](https://blog.devops.dev/day-25-kubernetes-operators-d67c8c2ad644)
+  - Day 26 - Chapter 1 - [Kubernetes Helm & Helm Charts](https://amanpathakdevops.medium.com/day-26-kubernetes-helm-helm-charts-chapter-1-46e23aba25e6)
+  - Day 26 - Chapter 2 - [Deploy Flask Application using Helm Chart and many more features- Kubernetes](https://blog.devops.dev/day-26-chapter-2-deploy-flask-application-using-helm-chart-and-many-more-features-kubernetes-daf402b69e5c)
   - ...
 
 </details>
