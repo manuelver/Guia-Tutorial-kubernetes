@@ -50,7 +50,8 @@
   - Day 25 - [Kubernetes Operators](https://blog.devops.dev/day-25-kubernetes-operators-d67c8c2ad644)
   - Day 26 - Chapter 1 - [Kubernetes Helm & Helm Charts](https://amanpathakdevops.medium.com/day-26-kubernetes-helm-helm-charts-chapter-1-46e23aba25e6)
   - Day 26 - Chapter 2 - [Deploy Flask Application using Helm Chart and many more features- Kubernetes](https://blog.devops.dev/day-26-chapter-2-deploy-flask-application-using-helm-chart-and-many-more-features-kubernetes-daf402b69e5c)
-  - Day 27- [AWS Elastic Kubernetes Service(EKS)](https://blog.devops.dev/day-27-aws-elastic-kubernetes-service-eks-3b917cafbf2e)
+  - Day 27 - [AWS Elastic Kubernetes Service(EKS)](https://blog.devops.dev/day-27-aws-elastic-kubernetes-service-eks-3b917cafbf2e)
+  - Day 28 - [Azure Kubernetes Service(AKS)](https://blog.devops.dev/day-28-azure-kubernetes-service-aks-353e09f2629c)
   - ...
 
 </details>
