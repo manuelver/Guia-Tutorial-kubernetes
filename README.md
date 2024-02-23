@@ -53,7 +53,7 @@
   - Day 27 - [AWS Elastic Kubernetes Service(EKS)](https://blog.devops.dev/day-27-aws-elastic-kubernetes-service-eks-3b917cafbf2e)
   - Day 28 - [Azure Kubernetes Service(AKS)](https://blog.devops.dev/day-28-azure-kubernetes-service-aks-353e09f2629c)
   - Day 29 - [Google Kubernetes Engine (GKE)](https://blog.devops.dev/day-29-google-kubernetes-engine-gke-b65dec4fe504)
-  - ...
+  - Day 30 - [End-to-End Kubernetes Project with JFrog Artifactory](https://github.com/AmanPathak-DevOps/30DaysOfKubernetes/blob/master/Day30/README.md)
 
 </details>
 <br>
